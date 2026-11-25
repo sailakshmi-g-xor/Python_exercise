@@ -9,7 +9,7 @@ def count_lines(path):
     with open(path, "r", encoding="utf-8") as f:
         return sum(1 for _ in f)
 
-journal_path = Path("output/journal.txt")
+journal_path = Path("03-file-handling/data/journal.txt")
 journal_path.parent.mkdir(exist_ok=True)
 journal_path.unlink(missing_ok=True)
 

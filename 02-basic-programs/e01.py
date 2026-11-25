@@ -9,5 +9,7 @@ def fizzbuzz(n):
             print("Buzz")
         else:
             print(i)
-n = int(input())
-fizzbuzz(n)
+if __name__ == "__main__":
+    n = int(input())
+    fizzbuzz(n)
+
