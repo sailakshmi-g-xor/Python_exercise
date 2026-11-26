@@ -2,7 +2,7 @@ from itertools import islice
 
 
 with open("data/notes.txt", "r", encoding="utf-8") as file:
-    i = 1;
+    i = 1
     for line in islice(file,5):
         clean_line = line.rstrip("\r\n")
         print(f"{i}:{clean_line:>{3}}")
