@@ -1,6 +1,5 @@
 def mask_number(number):
     return "*" * (len(number) - 4) + number[-4:]
-    #return number[-4:].rjust(len(number), "*")
 def reverse_word(sentence):
     return " ".join(reversed(sentence.split()))
 def middle(word):
