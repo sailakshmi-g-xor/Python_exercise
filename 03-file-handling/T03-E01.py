@@ -1,19 +1,31 @@
 from itertools import islice
+from pathlib import Path
 
 
-with open("data/notes.txt", "r", encoding="utf-8") as file:
-    i = 1
-    for line in islice(file,5):
-        clean_line = line.rstrip("\r\n")
-        print(f"{i}:{clean_line:>{3}}")
-        i = i+1
 def file_stats(path):
-    with open(path,"r",encoding="utf-8") as file:
-        lines = file.readlines()
-        print(f"Lines:{len(lines)}")
-        print(f"Words:{sum(len(line.split()) for line in lines)}")
-        print(f"Characters:{sum(len(line) for line in lines)}")
-        print(f"Blank lines:{sum(1 for line in lines if not line.strip())}")
+    with open(path, encoding="utf-8") as file:
+        lines = [line.rstrip("\r\n") for line in file]
+    return {
+        "lines": len(lines),
+        "words": sum(len(line.split()) for line in lines),
+        "characters": sum(len(line) for line in lines),
+        "blank": sum(not line.strip() for line in lines),
+    }
 
-path = "data/notes.txt"
-file_stats(path)
+
+def main():
+    notes_path = Path(__file__).parent / "data" / "notes.txt"
+    with notes_path.open(encoding="utf-8") as file:
+        for number, line in enumerate(islice(file, 5), start=1):
+            content = line.rstrip("\r\n")
+            print(f"{number:>3}: {content}")
+
+    stats = file_stats(notes_path)
+    print(f"Lines: {stats['lines']}")
+    print(f"Words: {stats['words']}")
+    print(f"Characters: {stats['characters']}")
+    print(f"Blank lines: {stats['blank']}")
+
+
+if __name__ == "__main__":
+    main()
