@@ -1,21 +1,29 @@
+import importlib.util
+from pathlib import Path
+
 import pytest
-from e01 import fizzbuzz
+
+
+spec = importlib.util.spec_from_file_location(
+    "t02_e01", Path(__file__).with_name("T02-E01.py")
+)
+fizzbuzz_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(fizzbuzz_module)
+fizzbuzz = fizzbuzz_module.fizzbuzz
 
 
 @pytest.mark.parametrize(
     "n, expected",
     [
-        (1, "1\n"),
-        (3, "1\n2\nFizz\n"),
-        (5, "1\n2\nFizz\n4\nBuzz\n"),
-        (15,
-         "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n"
-         "11\nFizz\n13\n14\nFizzBuzzz\n"),
+        (0, []),
+        (1, ["1"]),
+        (3, ["1", "2", "Fizz"]),
+        (5, ["1", "2", "Fizz", "4", "Buzz"]),
+        (15, [
+            "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz",
+            "11", "Fizz", "13", "14", "FizzBuzz",
+        ]),
     ],
 )
-def test_fizzbuzz(n, expected, capsys):
-    fizzbuzz(n)
-
-    captured = capsys.readouterr()
-
-    assert captured.out == expected
+def test_fizzbuzz(n, expected):
+    assert fizzbuzz(n) == expected

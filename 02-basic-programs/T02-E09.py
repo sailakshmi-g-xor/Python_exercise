@@ -1,5 +1,3 @@
-import sys
-
 ROMAN_MAP = [
     (1000, "M"),
     (900, "CM"),
@@ -77,23 +75,26 @@ def from_roman(text):
     return total
 
 
-for line in sys.stdin:
-    token = line.strip()
+def main():
+    import sys
 
-    if not token:
-        continue
+    for line in sys.stdin:
+        token = line.strip()
+        if not token:
+            continue
 
-    if token.isdigit():
-        n = int(token)
-
-        try:
-            print(f"{token} -> {to_roman(n)}")
-        except ValueError:
-            print(f"{token} -> out of range (1-3999)")
-    else:
-        value = from_roman(token)
-
-        if value is None:
-            print(f"{token} -> invalid")
+        if token.isdigit():
+            try:
+                print(f"{token} -> {to_roman(int(token))}")
+            except ValueError:
+                print(f"{token} -> out of range (1-3999)")
         else:
-            print(f"{token} -> {value}")
+            value = from_roman(token)
+            if value is None:
+                print(f"{token} -> invalid")
+            else:
+                print(f"{token} -> {value}")
+
+
+if __name__ == "__main__":
+    main()

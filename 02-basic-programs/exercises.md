@@ -326,9 +326,8 @@ Typed into the program (standard input):
 7
 0
 9
-3
+1
 x
-2
 4
 10
 4
